@@ -80,17 +80,17 @@
   <p id="usdtResult"></p>
 
   <p id="rate">Kur yükleniyor...</p>
-  <p class="note">Veriler Binance API üzerinden alınmaktadır. (Proxy ile)</p>
+  <p class="note">Veriler CoinGecko API üzerinden alınmaktadır.</p>
 
   <script>
     let currentRate = 0;
 
     async function fetchExchangeRate() {
       try {
-        const response = await fetch("https://corsproxy.io/?https://api.binance.com/api/v3/ticker/price?symbol=USDTRY");
+        const response = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=try");
         const data = await response.json();
-        currentRate = parseFloat(data.price);
-        document.getElementById("rate").textContent = `1 USDT = ${currentRate.toFixed(2)} TRY (Binance)`;
+        currentRate = parseFloat(data.tether.try);
+        document.getElementById("rate").textContent = `1 USDT = ${currentRate.toFixed(2)} TRY (CoinGecko)`;
       } catch (error) {
         document.getElementById("rate").textContent = "Kur verisi alınamadı!";
       }
